@@ -63,7 +63,15 @@ export class TradingService {
       status: newStatus,
     });
 
-    // 5. Create Trade record
+    // 5. Transfer physical/simulated energy: Seller's net energy reduces, Buyer's net energy increases
+    store.adjustHouseNetEnergy(listing.house_id, -roundedEnergy);
+
+    const buyerHouse = store.getHouseByOwnerId(buyer.id);
+    if (buyerHouse) {
+      store.adjustHouseNetEnergy(buyerHouse.id, roundedEnergy);
+    }
+
+    // 6. Create Trade record
     const tradeId = crypto.randomUUID();
     const trade: Trade = {
       id: tradeId,

@@ -116,6 +116,26 @@ export class Store {
     this.readings.set(reading.house_id, [reading, ...list.slice(0, 49)]); // keep last 50 readings
   }
 
+  /**
+   * Adjusts the latest net energy reading for a house when P2P energy is sold (-delta) or bought (+delta).
+   */
+  public adjustHouseNetEnergy(houseId: string, deltaKwh: number): EnergyReading | undefined {
+    const latest = this.getLatestReading(houseId);
+    if (!latest) return undefined;
+
+    const newNet = Math.round((latest.net_energy_kwh + deltaKwh) * 100) / 100;
+    const updatedReading: EnergyReading = {
+      ...latest,
+      id: crypto.randomUUID(),
+      net_energy_kwh: newNet,
+      recorded_at: new Date().toISOString(),
+      source: 'simulation',
+    };
+
+    this.recordReading(updatedReading);
+    return updatedReading;
+  }
+
   // --- Listings ---
   public getListings(statusFilter?: string): EnergyListing[] {
     const all = Array.from(this.listings.values());

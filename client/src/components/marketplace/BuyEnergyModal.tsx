@@ -77,6 +77,9 @@ export const BuyEnergyModal: React.FC<BuyEnergyModalProps> = ({
               You acquired <strong className="text-slate-800 font-bold">{completedTrade.energy_kwh} kWh</strong> for{' '}
               <strong className="text-emerald-700 font-bold">₹{completedTrade.total_amount.toFixed(2)}</strong>.
             </p>
+            <p className="text-[11px] font-semibold text-emerald-700 mt-1 bg-emerald-50 py-1 px-3 rounded-full inline-block border border-emerald-200">
+              ⚡ Household Net Energy Balance increased by +{completedTrade.energy_kwh} kWh
+            </p>
           </div>
 
           {/* Blockchain Verification Block (Rule 34 & 35) */}

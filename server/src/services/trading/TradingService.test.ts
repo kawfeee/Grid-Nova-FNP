@@ -90,5 +90,11 @@ describe('GridNova Trading Engine & Mock Blockchain Integration', () => {
     expect(trade.blockchain_tx?.transaction_hash).toMatch(/^0x[a-f0-9]{64}$/);
     expect(trade.blockchain_tx?.network).toBe('GridNova Test Network');
     expect(trade.blockchain_tx?.block_number).toBeGreaterThan(12840);
+
+    // Energy balance transfer check: Aarav's net energy reduces, Bhavna's net energy increases
+    const houseAState = store.getHouseEnergyState('10000000-0000-0000-0000-000000000001')!;
+    const houseBState = store.getHouseEnergyState('10000000-0000-0000-0000-000000000002')!;
+    expect(houseAState.latest_reading.net_energy_kwh).toBe(2.3); // 3.8 - 1.5 = 2.3 kWh
+    expect(houseBState.latest_reading.net_energy_kwh).toBe(-0.6); // -2.1 + 1.5 = -0.6 kWh (deficit reduced)
   });
 });
