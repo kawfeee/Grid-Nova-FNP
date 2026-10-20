@@ -8,7 +8,7 @@ import { Sun, Home, Zap, Battery } from 'lucide-react';
 export const NeighbourhoodPage: React.FC<{
   currentUser: UserProfile | null;
   refreshTrigger: number;
-}> = ({ refreshTrigger }) => {
+}> = ({ currentUser, refreshTrigger }) => {
   const [neighbourhoodState, setNeighbourhoodState] = useState<NeighbourhoodState | null>(null);
   const [selectedHouse, setSelectedHouse] = useState<HouseEnergyState | null>(null);
 
@@ -40,6 +40,7 @@ export const NeighbourhoodPage: React.FC<{
       {/* Main Visualizer */}
       <NeighbourhoodVisualizer
         neighbourhoodState={neighbourhoodState}
+        currentUser={currentUser}
         onSelectHouse={(houseState: HouseEnergyState) => setSelectedHouse(houseState)}
       />
 

@@ -32,15 +32,39 @@ body {
 
 /* Animated pulse for active energy flow lines */
 @keyframes energyPulse {
-  0% {
-    stroke-dashoffset: 24;
-  }
-  100% {
-    stroke-dashoffset: 0;
-  }
+  0% { stroke-dashoffset: 24; }
+  100% { stroke-dashoffset: 0; }
 }
 
 .energy-flow-active {
   stroke-dasharray: 6 6;
   animation: energyPulse 1s linear infinite;
+}
+
+/* Surplus: marching dashes toward hub (decreasing offset) */
+@keyframes flowSurplus {
+  from { stroke-dashoffset: 52; }
+  to   { stroke-dashoffset: 0; }
+}
+.energy-flow-surplus {
+  animation: flowSurplus 1.6s linear infinite;
+}
+
+/* Deficit: marching dashes away from hub (increasing offset) */
+@keyframes flowDeficit {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: 52; }
+}
+.energy-flow-deficit {
+  animation: flowDeficit 1.6s linear infinite;
+}
+
+/* Balanced: slow gentle pulse, alternating direction */
+@keyframes flowBalanced {
+  0%   { stroke-dashoffset: 26; }
+  50%  { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 26; }
+}
+.energy-flow-balanced {
+  animation: flowBalanced 3s ease-in-out infinite;
 }
